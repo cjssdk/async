@@ -30,32 +30,42 @@
 module.exports = function ( tasks, callback ) {
 	var isArray = Array.isArray(tasks),
 		isError = false,
-		results = isArray ? [] : {},
-		counter = 0,
-		handler = function ( task, key ) {
-			task(function ( error, result ) {
-				if ( isError ) {
-					return;
-				}
+		results, keys, counter;
 
-				if ( error ) {
-					isError = true;
-					callback(error);
-					return;
-				}
+	function handler ( task, key ) {
+		task(function ( error, result ) {
+			if ( isError ) {
+				return;
+			}
 
-				counter++;
-				results[key] = result;
-				if ( counter === tasks.length ) {
-					callback(null, results);
-				}
-			});
-		};
+			if ( error ) {
+				isError = true;
+				callback(error);
+				return;
+			}
+
+			counter--;
+			results[key] = result;
+
+			if ( counter === 0 ) {
+				callback(null, results);
+			}
+		});
+	}
+
+	if ( !tasks ) {
+		return;
+	}
 
 	if ( isArray ) {
+		results = [];
+		counter = tasks.length;
 		tasks.forEach(handler);
 	} else {
-		Object.keys(tasks).forEach(function ( key ) {
+		results = {};
+		keys    = Object.keys(tasks);
+		counter = keys.length;
+		keys.forEach(function ( key ) {
 			handler(tasks[key], key);
 		});
 	}
