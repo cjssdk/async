@@ -16,10 +16,32 @@ npm install cjs-async
 
 ## Usage ##
 
+#### parallel
+
 Add to the scope:
 
 ```js
-var async = require('cjs-async');
+var parallel = require('cjs-async/parallel');
+```
+
+Array of tasks:
+
+```js
+parallel([funcA, funcB, funcC], function ( error, results ) {
+    // results contains array of the given tasks execution results
+});
+```
+
+Named set of tasks:
+
+```js
+parallel({
+    one: funcA,
+    two: funcB,
+    three:funcC
+}, function ( error, results ) {
+    // results contains hash table of the given tasks execution results
+});
 ```
 
 
