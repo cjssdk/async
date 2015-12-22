@@ -1,27 +1,27 @@
 {
-	"name": "cjs-async",
-	"version": "1.0.0",
-	"description": "Asynchronous tools.",
-	"author": {
-		"name": "Stanislav Kalashnik",
-		"email": "darkpark.main@gmail.com"
-	},
-	"repository": "cjssdk/async",
-	"scripts": {
-		"lint": "eslint ./*.js",
-		"test": "node ./tests/main.js"
-	},
-	"dependencies": {},
-	"devDependencies": {
-		"mocha": "2.*.*",
-		"should": "8.*.*"
-	},
-	"keywords": [
-		"commonjs",
-		"sdk",
-		"cjssdk",
-		"framework",
-		"async"
-	],
-	"license": "GPL-3.0"
+    "name": "cjs-async",
+    "version": "1.0.0",
+    "description": "Asynchronous tools.",
+    "author": {
+        "name": "Stanislav Kalashnik",
+        "email": "darkpark.main@gmail.com"
+    },
+    "repository": "cjssdk/async",
+    "scripts": {
+        "lint": "eslint ./*.js",
+        "test": "node ./tests/main.js"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "mocha": "2.*.*",
+        "should": "8.*.*"
+    },
+    "keywords": [
+        "commonjs",
+        "sdk",
+        "cjssdk",
+        "framework",
+        "async"
+    ],
+    "license": "GPL-3.0"
 }

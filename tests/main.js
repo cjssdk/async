@@ -8,12 +8,12 @@
 'use strict';
 
 var Mocha  = require('mocha'),
-	mocha  = new Mocha({
-		reporter: 'spec',
-		timeout: 1000,
-		bail: true,
-		fullTrace: true
-	});
+    mocha  = new Mocha({
+        reporter: 'spec',
+        timeout: 1000,
+        bail: true,
+        fullTrace: true
+    });
 
 
 global.DEBUG = true;
@@ -23,6 +23,6 @@ mocha.addFile('./tests/specs/parallel');
 
 // exec
 mocha.run(function ( failures ) {
-	// return exit code
-	process.exit(failures);
+    // return exit code
+    process.exit(failures);
 });

@@ -7,6 +7,6 @@
 
 // public
 module.exports = {
-	serial:   require('./serial'),
-	parallel: require('./parallel')
+    serial:   require('./serial'),
+    parallel: require('./parallel')
 };
