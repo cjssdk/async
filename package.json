@@ -9,9 +9,9 @@
     "repository": "cjssdk/async",
     "scripts": {
         "lint": "eslint ./*.js",
-        "test": "node ./tests/main.js"
+        "test": "node ./tests/main.js",
+        "jsdoc": "jsdoc --destination doc *.js readme.md"
     },
-    "dependencies": {},
     "devDependencies": {
         "mocha": "2.*.*",
         "should": "8.*.*"
