@@ -7,6 +7,9 @@ Asynchronous tools
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-blue.svg?style=flat-square)](https://gitter.im/DarkPark/cjssdk)
 
 
+Set of methods to synchronize asynchronous operations.
+
+
 ## Installation ##
 
 ```bash
