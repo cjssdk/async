@@ -5,6 +5,8 @@
 
 'use strict';
 
+var tools = require('./lib/tools');
+
 /**
  * Method to execute tasks.
  *
@@ -26,15 +28,13 @@
  *
  * @param {taskCallback[]|Object.<string, taskCallback>} tasks set of tasks to execute
  * @param {asyncCallback} [callback] optional callback to run once all the tasks have completed
- *
- * @return {boolean} operation status
  */
 module.exports = function ( tasks, callback ) {
-    var isArray = Array.isArray(tasks),
-        isError = false,
-        results, keys, counter;
+    var isError = false,
+        counter = 0,
+        i;
 
-    function handler ( task, key ) {
+    function handler ( task, name ) {
         task(function ( error, result ) {
             if ( isError ) {
                 return;
@@ -48,37 +48,28 @@ module.exports = function ( tasks, callback ) {
                 return;
             }
 
-            counter--;
-            results[key] = result;
+            counter++;
+            tasks.results[name] = result;
 
-            if ( counter === 0 && typeof callback === 'function' ) {
-                callback(null, results);
+            if ( counter >= tasks.size && typeof callback === 'function' ) {
+                callback(null, tasks.results);
             }
         });
     }
 
-    if ( !tasks ) {
-        return false;
-    }
-
-    if ( isArray ) {
-        results = [];
-        counter = tasks.length;
-        tasks.forEach(handler);
-    } else {
-        results = {};
-        keys    = Object.keys(tasks);
-        counter = keys.length;
-        keys.forEach(function ( key ) {
-            handler(tasks[key], key);
-        });
-    }
+    // prepare
+    tasks = tools.normalize(tasks);
 
     // no tasks were given
-    if ( counter === 0 && typeof callback === 'function' ) {
-        // empty result
-        callback(null, results);
+    if ( tasks.size === 0 ) {
+        if ( typeof callback === 'function' ) {
+            // empty result
+            callback(null, tasks.results);
+        }
+    } else {
+        // run all tasks
+        for ( i = 0; i < tasks.size; i++ ) {
+            handler(tasks.values[i], tasks.keys[i]);
+        }
     }
-
-    return true;
 };
