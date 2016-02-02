@@ -26,6 +26,8 @@
  *
  * @param {taskCallback[]|Object.<string, taskCallback>} tasks set of tasks to execute
  * @param {asyncCallback} [callback] optional callback to run once all the tasks have completed
+ *
+ * @return {boolean} operation status
  */
 module.exports = function ( tasks, callback ) {
     var isArray = Array.isArray(tasks),
@@ -40,21 +42,23 @@ module.exports = function ( tasks, callback ) {
 
             if ( error ) {
                 isError = true;
-                callback(error);
+                if ( typeof callback === 'function' ) {
+                    callback(error);
+                }
                 return;
             }
 
             counter--;
             results[key] = result;
 
-            if ( counter === 0 ) {
+            if ( counter === 0 && typeof callback === 'function' ) {
                 callback(null, results);
             }
         });
     }
 
     if ( !tasks ) {
-        return;
+        return false;
     }
 
     if ( isArray ) {
@@ -69,4 +73,12 @@ module.exports = function ( tasks, callback ) {
             handler(tasks[key], key);
         });
     }
+
+    // no tasks were given
+    if ( counter === 0 && typeof callback === 'function' ) {
+        // empty result
+        callback(null, results);
+    }
+
+    return true;
 };

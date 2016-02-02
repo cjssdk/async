@@ -38,6 +38,17 @@ describe('parallel', function () {
         parallel(123, 123);
     });
 
+    it('should pass: task array: 0 tasks', function ( done ) {
+        parallel([], function ( error, results ) {
+            should.not.exist(error);
+
+            should.exist(results);
+            results.should.containDeep([]);
+
+            done();
+        });
+    });
+
     it('should pass: task array: 1 task', function ( done ) {
         parallel([
             function ( callback ) {
@@ -79,6 +90,17 @@ describe('parallel', function () {
 
             should.exist(results);
             results.should.containDeep([true, 256, '512']);
+
+            done();
+        });
+    });
+
+    it('should pass: task object: 0 tasks', function ( done ) {
+        parallel({}, function ( error, results ) {
+            should.not.exist(error);
+
+            should.exist(results);
+            results.should.containDeep({});
 
             done();
         });
