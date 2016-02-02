@@ -20,6 +20,7 @@ global.DEBUG = true;
 
 // add specs
 mocha.addFile('./tests/specs/parallel');
+mocha.addFile('./tests/specs/serial');
 
 // exec
 mocha.run(function ( failures ) {
