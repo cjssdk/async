@@ -12,10 +12,6 @@
         "test": "node ./tests/main.js",
         "jsdoc": "jsdoc --destination doc *.js readme.md"
     },
-    "devDependencies": {
-        "mocha": "2.*.*",
-        "should": "8.*.*"
-    },
     "keywords": [
         "commonjs",
         "sdk",

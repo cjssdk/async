@@ -5,72 +5,66 @@
 
 'use strict';
 
-var tools = require('./lib/tools');
-
 /**
- * Method to execute tasks.
+ * Serial tasks execution.
  *
- * @callback taskCallback
- *
- * @param {asyncCallback} callback result handler
- */
-
-/**
- * Method to handle asynchronous operations.
- *
- * @callback asyncCallback
- *
- * @param {*} error operation execution error
- * @param {*} [result] execution result when no errors
- */
-
-/**
- *
- * @param {taskCallback[]|Object.<string, taskCallback>} tasks set of tasks to execute
- * @param {asyncCallback} [callback] optional callback to run once all the tasks have completed
+ * @param {function[]} tasks set of tasks to execute
+ * @param {function} [callback] optional callback to run once all the tasks have completed
  */
 module.exports = function ( tasks, callback ) {
     var isError = false,
-        counter = 0;
+        counter = 0,
+        outList = [],
+        outHash = {};
 
-    function handler ( task, name ) {
+    function handler ( task ) {
         task(function ( error, result ) {
+            // error happened in some other task
             if ( isError ) {
+                // callback was already used
                 return;
             }
 
             if ( error ) {
+                // exit this task
+                // and prevent other to callback
                 isError = true;
+
                 if ( typeof callback === 'function' ) {
                     callback(error);
                 }
+
                 return;
             }
 
-            counter++;
-            tasks.results[name] = result;
+            // fill results
+            outList[counter] = result;
+            if ( task.name ) {
+                outHash[task.name] = result;
+            }
 
-            if ( counter >= tasks.size ) {
-                if ( typeof callback === 'function' ) {
-                    callback(null, tasks.results);
-                }
+            counter++;
+
+            // all tasks are processed
+            if ( counter >= tasks.length && typeof callback === 'function' ) {
+                callback(null, outList, outHash);
             } else {
-                handler(tasks.values[counter], tasks.keys[counter]);
+                handler(tasks[counter]);
             }
         });
     }
 
-    // prepare
-    tasks = tools.normalize(tasks);
+    // sanitize
+    tasks = Array.isArray(tasks) ? tasks : [];
 
     // no tasks were given
-    if ( tasks.size === 0 ) {
+    if ( tasks.length === 0 ) {
         if ( typeof callback === 'function' ) {
             // empty result
-            callback(null, tasks.results);
+            callback(null, outList, outHash);
         }
     } else {
         // run the first task
-        handler(tasks.values[0], tasks.keys[0]);
+        handler(tasks[0]);
     }
 };

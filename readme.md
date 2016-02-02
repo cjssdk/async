@@ -16,10 +16,21 @@ Set of methods to synchronize asynchronous operations.
 npm install cjs-async
 ```
 
+For test execution there are some additional dependencies:
+
+```bash
+sudo npm install -g mocha should
+```
+
 
 ## Usage ##
 
 #### parallel
+
+Run the tasks array of functions in parallel, without waiting until the previous function has completed.
+If any of the functions pass an error to its callback, the main callback is immediately called with the value of the error.
+Once the tasks have completed, the results are passed to the final callback as an array and hash.
+Task function name is used to name the corresponding hash-table values.
 
 Add to the scope:
 
@@ -27,11 +38,11 @@ Add to the scope:
 var parallel = require('cjs-async/parallel');
 ```
 
-Array of tasks:
+Tasks definition:
 
 ```js
 parallel([
-    function ( callback ) {
+    function taskA ( callback ) {
         setTimeout(function () {
             callback(null, true);
         }, 10);
@@ -41,26 +52,61 @@ parallel([
             callback(null, 256);
         }, 20);
     },
-    function ( callback ) {
+    function taskB ( callback ) {
         setTimeout(function () {
             callback(null, '512');
         }, 0);
     }
-], function ( error, results ) {
-    // results contains array of the given tasks execution results
-    // [true, 256, '512']
+], function ( error, list, hash ) {
+    if ( !error ) {
+        // list contains array of the given tasks execution results
+        // [true, 256, '512']
+        // hash contains named tasks execution results
+        // {taskA: true, taskB: '512'}
+    }
 });
 ```
 
-Named set of tasks:
+#### serial
+
+Run the functions in the tasks array in series, each one running once the previous function has completed.
+If any functions in the series pass an error to its callback, no more functions are run,
+and callback is immediately called with the value of the error.
+Otherwise, callback receives an array and hash of results when tasks have completed.
+Task function name is used to name the corresponding hash-table values.
+
+Add to the scope:
 
 ```js
-parallel({
-    one: funcA,
-    two: funcB,
-    three:funcC
-}, function ( error, results ) {
-    // results contains hash table of the given tasks execution results
+var serial = require('cjs-async/serial');
+```
+
+Tasks definition:
+
+```js
+serial([
+    function taskA ( callback ) {
+        setTimeout(function () {
+            callback(null, true);
+        }, 10);
+    },
+    function ( callback ) {
+        setTimeout(function () {
+            callback(null, 256);
+        }, 20);
+    },
+    function taskB ( callback ) {
+        setTimeout(function () {
+            callback(null, '512');
+        }, 0);
+    }
+], function ( error, list, hash ) {
+    if ( !error ) {
+        // list contains array of the given tasks execution results
+        // [true, 256, '512']
+        // hash contains named tasks execution results
+        // {taskA: true, taskB: '512'}
+    }
 });
 ```
 
