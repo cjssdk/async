@@ -30,8 +30,25 @@ var parallel = require('cjs-async/parallel');
 Array of tasks:
 
 ```js
-parallel([funcA, funcB, funcC], function ( error, results ) {
+parallel([
+    function ( callback ) {
+        setTimeout(function () {
+            callback(null, true);
+        }, 10);
+    },
+    function ( callback ) {
+        setTimeout(function () {
+            callback(null, 256);
+        }, 20);
+    },
+    function ( callback ) {
+        setTimeout(function () {
+            callback(null, '512');
+        }, 0);
+    }
+], function ( error, results ) {
     // results contains array of the given tasks execution results
+    // [true, 256, '512']
 });
 ```
 
