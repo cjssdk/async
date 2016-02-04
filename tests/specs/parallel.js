@@ -222,19 +222,24 @@ describe('parallel', function () {
     });
 
     it('should fail: 3 simple tasks with first failed', function ( done ) {
+        var counter = 0;
+
         parallel([
             function ( callback ) {
                 setTimeout(function () {
+                    counter++;
                     callback(null, true);
                 }, 10);
             },
             function ( callback ) {
                 setTimeout(function () {
+                    counter++;
                     callback(null, 256);
                 }, 20);
             },
             function ( callback ) {
                 setTimeout(function () {
+                    counter++;
                     callback(true);
                 }, 0);
             }
@@ -245,9 +250,13 @@ describe('parallel', function () {
 
             should.not.exist(list);
             should.not.exist(hash);
-
-            done();
+            counter.should.equal(1);
         });
+
+        setTimeout(function () {
+            counter.should.equal(3);
+            done();
+        }, 25);
     });
 
     it('should pass: 3 simple tasks with last failed', function ( done ) {
@@ -280,14 +289,19 @@ describe('parallel', function () {
     });
 
     it('should pass: 3 simple tasks with all failed', function ( done ) {
+        var counter = 0;
+
         parallel([
             function ( callback ) {
+                counter++;
                 callback(1);
             },
             function ( callback ) {
+                counter++;
                 callback(2);
             },
             function ( callback ) {
+                counter++;
                 callback(3);
             }
         ],
@@ -297,9 +311,13 @@ describe('parallel', function () {
 
             should.not.exist(list);
             should.not.exist(hash);
-
-            done();
+            counter.should.equal(1);
         });
+
+        setTimeout(function () {
+            counter.should.equal(1);
+            done();
+        }, 5);
     });
 
 });

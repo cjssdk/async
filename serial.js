@@ -18,13 +18,13 @@ module.exports = function ( tasks, callback ) {
         outHash = {};
 
     function handler ( task ) {
-        task(function ( error, result ) {
-            // error happened in some other task
-            if ( isError ) {
-                // callback was already used
-                return;
-            }
+        // error happened in some other task
+        if ( isError ) {
+            // callback was already used
+            return;
+        }
 
+        task(function ( error, result ) {
             if ( error ) {
                 // exit this task
                 // and prevent other to callback
