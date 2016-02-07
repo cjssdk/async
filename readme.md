@@ -67,6 +67,7 @@ parallel([
         // [true, 256, '512', 32]
         // hash contains named tasks execution results
         // {taskA: true, taskB: '512'}
+        console.log(list, hash);
     }
 });
 ```
@@ -114,6 +115,7 @@ serial([
         // [32, true, 256, '512']
         // hash contains named tasks execution results
         // {taskA: true, taskB: '512'}
+        console.log(list, hash);
     }
 });
 ```
