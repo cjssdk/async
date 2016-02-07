@@ -44,7 +44,7 @@ describe('parallel', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([]);
+            list.should.eql([]);
             hash.should.containDeep({});
 
             done();
@@ -57,7 +57,7 @@ describe('parallel', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([]);
+            list.should.eql([]);
             hash.should.containDeep({});
 
             done();
@@ -77,7 +77,7 @@ describe('parallel', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([128]);
+            list.should.eql([128]);
             hash.should.containDeep({});
 
             done();
@@ -97,7 +97,7 @@ describe('parallel', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([128]);
+            list.should.eql([128]);
             hash.should.containDeep({one: 128});
 
             done();
@@ -130,21 +130,21 @@ describe('parallel', function () {
             function ( callback ) {
                 setTimeout(function () {
                     counter++;
-                    should(counter).equal(2);
+                    counter.should.equal(2);
                     callback(null, true);
                 }, 10);
             },
             function ( callback ) {
                 setTimeout(function () {
                     counter++;
-                    should(counter).equal(3);
+                    counter.should.equal(3);
                     callback(null, 256);
                 }, 20);
             },
             function ( callback ) {
                 setTimeout(function () {
                     counter++;
-                    should(counter).equal(1);
+                    counter.should.equal(1);
                     callback(null, '512');
                 }, 0);
             }
@@ -154,11 +154,46 @@ describe('parallel', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([true, 256, '512']);
+            list.should.eql([true, 256, '512']);
             hash.should.containDeep({});
 
             done();
         });
+    });
+
+    it('should pass: 3 simple tasks with and without callbacks', function ( done ) {
+        var counter = 0;
+
+        parallel([
+            function () {
+                counter++;
+            },
+            function ( callback ) {
+                setTimeout(function () {
+                    counter++;
+                    callback(null, 256);
+                }, 20);
+            },
+            function () {
+                counter++;
+                return 128;
+            }
+        ],
+        function ( error, list, hash ) {
+            should.not.exist(error);
+
+            should.exist(list);
+            should.exist(hash);
+            counter.should.equal(3);
+            list.should.eql([undefined, 256, 128]);
+            hash.should.containDeep({});
+
+            done();
+        });
+
+        setTimeout(function () {
+            counter.should.equal(2);
+        }, 5);
     });
 
     it('should pass: 3 named tasks', function ( done ) {
@@ -184,8 +219,34 @@ describe('parallel', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([true, 256, '512']);
+            list.should.eql([true, 256, '512']);
             hash.should.containDeep({t1: true, t2: 256, t3: '512'});
+
+            done();
+        });
+    });
+
+    it('should pass: 3 named tasks with and without callbacks', function ( done ) {
+        parallel([
+            function t1 () {
+                return 32;
+            },
+            function t2 () {
+                return true;
+            },
+            function t3 ( callback ) {
+                setTimeout(function () {
+                    callback(null, '512');
+                }, 0);
+            }
+        ],
+        function ( error, list, hash ) {
+            should.not.exist(error);
+
+            should.exist(list);
+            should.exist(hash);
+            list.should.eql([32, true, '512']);
+            hash.should.containDeep({t1: 32, t2: true, t3: '512'});
 
             done();
         });
@@ -214,8 +275,34 @@ describe('parallel', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([true, 256, '512']);
+            list.should.eql([true, 256, '512']);
             hash.should.containDeep({t1: true, t3: '512'});
+
+            done();
+        });
+    });
+
+    it('should pass: 3 mixed tasks with and without callbacks', function ( done ) {
+        parallel([
+            function () {
+                return 32;
+            },
+            function t2 () {
+                return true;
+            },
+            function ( callback ) {
+                setTimeout(function () {
+                    callback(null, '512');
+                }, 0);
+            }
+        ],
+        function ( error, list, hash ) {
+            should.not.exist(error);
+
+            should.exist(list);
+            should.exist(hash);
+            list.should.eql([32, true, '512']);
+            hash.should.containDeep({t2: true});
 
             done();
         });

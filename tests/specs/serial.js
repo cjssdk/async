@@ -44,7 +44,7 @@ describe('serial', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([]);
+            list.should.eql([]);
             hash.should.containDeep({});
 
             done();
@@ -57,7 +57,7 @@ describe('serial', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([]);
+            list.should.eql([]);
             hash.should.containDeep({});
 
             done();
@@ -77,7 +77,7 @@ describe('serial', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([128]);
+            list.should.eql([128]);
             hash.should.containDeep({});
 
             done();
@@ -97,7 +97,7 @@ describe('serial', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([128]);
+            list.should.eql([128]);
             hash.should.containDeep({one: 128});
 
             done();
@@ -130,21 +130,21 @@ describe('serial', function () {
             function ( callback ) {
                 setTimeout(function () {
                     counter++;
-                    should(counter).equal(1);
+                    counter.should.equal(1);
                     callback(null, true);
                 }, 10);
             },
             function ( callback ) {
                 setTimeout(function () {
                     counter++;
-                    should(counter).equal(2);
+                    counter.should.equal(2);
                     callback(null, 256);
                 }, 20);
             },
             function ( callback ) {
                 setTimeout(function () {
                     counter++;
-                    should(counter).equal(3);
+                    counter.should.equal(3);
                     callback(null, '512');
                 }, 0);
             }
@@ -154,11 +154,47 @@ describe('serial', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([true, 256, '512']);
+            list.should.eql([true, 256, '512']);
             hash.should.containDeep({});
 
             done();
         });
+    });
+
+    it('should pass: 3 simple tasks with and without callbacks', function ( done ) {
+        var counter = 0;
+
+        serial([
+            function () {
+                counter++;
+            },
+            function ( callback ) {
+                setTimeout(function () {
+                    counter++;
+                    counter.should.equal(2);
+                    callback(null, 256);
+                }, 20);
+            },
+            function () {
+                counter++;
+                return 128;
+            }
+        ],
+        function ( error, list, hash ) {
+            should.not.exist(error);
+
+            should.exist(list);
+            should.exist(hash);
+            counter.should.equal(3);
+            list.should.eql([undefined, 256, 128]);
+            hash.should.containDeep({});
+
+            done();
+        });
+
+        setTimeout(function () {
+            counter.should.equal(1);
+        }, 5);
     });
 
     it('should pass: 3 named tasks', function ( done ) {
@@ -184,8 +220,34 @@ describe('serial', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([true, 256, '512']);
+            list.should.eql([true, 256, '512']);
             hash.should.containDeep({t1: true, t2: 256, t3: '512'});
+
+            done();
+        });
+    });
+
+    it('should pass: 3 named tasks with and without callbacks', function ( done ) {
+        serial([
+            function t1 ( callback ) {
+                setTimeout(function () {
+                    callback(null, true);
+                }, 10);
+            },
+            function t2 () {
+                return null;
+            },
+            function t3 () {
+                return 32;
+            }
+        ],
+        function ( error, list, hash ) {
+            should.not.exist(error);
+
+            should.exist(list);
+            should.exist(hash);
+            list.should.eql([true, null, 32]);
+            hash.should.containDeep({t1: true, t2: null, t3: 32});
 
             done();
         });
@@ -214,8 +276,34 @@ describe('serial', function () {
 
             should.exist(list);
             should.exist(hash);
-            list.should.containDeep([true, 256, '512']);
+            list.should.eql([true, 256, '512']);
             hash.should.containDeep({t1: true, t3: '512'});
+
+            done();
+        });
+    });
+
+    it('should pass: 3 mixed tasks with and without callbacks', function ( done ) {
+        serial([
+            function () {
+                return true;
+            },
+            function ( callback ) {
+                setTimeout(function () {
+                    callback(null, 256);
+                }, 20);
+            },
+            function t3 () {
+                return '512';
+            }
+        ],
+        function ( error, list, hash ) {
+            should.not.exist(error);
+
+            should.exist(list);
+            should.exist(hash);
+            list.should.eql([true, 256, '512']);
+            hash.should.containDeep({t3: '512'});
 
             done();
         });

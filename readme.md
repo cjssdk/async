@@ -31,6 +31,7 @@ Run the tasks array of functions in parallel, without waiting until the previous
 If any of the functions pass an error to its callback, the main callback is immediately called with the value of the error.
 Once the tasks have completed, the results are passed to the final callback as an array and hash.
 Task function name is used to name the corresponding hash-table values.
+Task function can either use callback to specify error and result value or return result value immediately.
 
 Add to the scope:
 
@@ -56,11 +57,14 @@ parallel([
         setTimeout(function () {
             callback(null, '512');
         }, 0);
+    },
+    function () {
+        return 32;
     }
 ], function ( error, list, hash ) {
     if ( !error ) {
         // list contains array of the given tasks execution results
-        // [true, 256, '512']
+        // [true, 256, '512', 32]
         // hash contains named tasks execution results
         // {taskA: true, taskB: '512'}
     }
@@ -74,6 +78,7 @@ If any functions in the series pass an error to its callback, no more functions 
 and callback is immediately called with the value of the error.
 Otherwise, callback receives an array and hash of results when tasks have completed.
 Task function name is used to name the corresponding hash-table values.
+Task function can either use callback to specify error and result value or return result value immediately.
 
 Add to the scope:
 
@@ -85,6 +90,9 @@ Tasks definition:
 
 ```js
 serial([
+    function () {
+        return 32;
+    },
     function taskA ( callback ) {
         setTimeout(function () {
             callback(null, true);
@@ -103,7 +111,7 @@ serial([
 ], function ( error, list, hash ) {
     if ( !error ) {
         // list contains array of the given tasks execution results
-        // [true, 256, '512']
+        // [32, true, 256, '512']
         // hash contains named tasks execution results
         // {taskA: true, taskB: '512'}
     }

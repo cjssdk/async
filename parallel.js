@@ -17,14 +17,8 @@ module.exports = function ( tasks, callback ) {
         outList = [],
         outHash = {};
 
-    function handler ( task ) {
-        // error happened in some other task
-        if ( isError ) {
-            // callback was already used
-            return;
-        }
-
-        task(function ( error, result ) {
+    function handler ( task, index ) {
+        var done = function ( error, result ) {
             if ( error ) {
                 // exit this task
                 // and prevent other to callback
@@ -38,7 +32,7 @@ module.exports = function ( tasks, callback ) {
             }
 
             // fill results
-            outList[counter] = result;
+            outList[index] = result;
             if ( task.name ) {
                 outHash[task.name] = result;
             }
@@ -49,7 +43,20 @@ module.exports = function ( tasks, callback ) {
             if ( counter >= tasks.length && typeof callback === 'function' ) {
                 callback(null, outList, outHash);
             }
-        });
+        };
+
+        // error happened in some other task
+        if ( isError ) {
+            // callback was already used
+            return;
+        }
+
+        // actual call condition
+        if ( task.length === 0 ) {
+            done(null, task());
+        } else {
+            task(done);
+        }
     }
 
     // sanitize
