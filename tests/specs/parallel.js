@@ -17,10 +17,6 @@ var should   = require('should'),
 
 describe('parallel', function () {
 
-    before(function () {});
-
-    after(function () {});
-
     it('should pass: bad arguments', function () {
         parallel();
         parallel([]);
