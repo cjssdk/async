@@ -12,6 +12,9 @@
         "test": "node ./tests/main.js",
         "jsdoc": "jsdoc --destination doc *.js readme.md"
     },
+    "devDependencies": {
+        "cjs-eslint-config": "cjssdk/eslint-config"
+    },
     "keywords": [
         "commonjs",
         "sdk",
