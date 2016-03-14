@@ -16,7 +16,7 @@ Set of methods to synchronize asynchronous operations.
 npm install cjs-async
 ```
 
-For test execution there are some additional dependencies:
+For tests execution there are some additional dependencies:
 
 ```bash
 sudo npm install -g mocha should
