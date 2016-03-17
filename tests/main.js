@@ -7,8 +7,8 @@
 
 'use strict';
 
-var Mocha  = require('mocha'),
-    mocha  = new Mocha({
+var Mocha = require('mocha'),
+    mocha = new Mocha({
         reporter: 'spec',
         timeout: 1000,
         bail: true,

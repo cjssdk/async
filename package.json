@@ -13,7 +13,9 @@
         "jsdoc": "jsdoc --destination doc *.js readme.md"
     },
     "devDependencies": {
-        "cjs-eslint-config": "cjssdk/eslint-config"
+        "cjs-eslint-config": "cjssdk/eslint-config",
+        "mocha": "2.*.*",
+        "should": "8.*.*"
     },
     "keywords": [
         "commonjs",
