@@ -40,8 +40,10 @@ module.exports = function ( tasks, callback ) {
             counter++;
 
             // all tasks are processed
-            if ( counter >= tasks.length && typeof callback === 'function' ) {
+            if ( counter === tasks.length && typeof callback === 'function' ) {
                 callback(null, outList, outHash);
+            } else if ( counter > tasks.length ) {
+                throw Error('done callback invoked more than one time in function with ' + index + ' position in tasks array');
             }
         };
 
