@@ -14,8 +14,7 @@
 module.exports = function ( tasks, callback ) {
     var isError = false,
         counter = 0,
-        outList = [],
-        outHash = {};
+        results = [];
 
     function handler ( task ) {
         var done = function ( error, result ) {
@@ -32,16 +31,13 @@ module.exports = function ( tasks, callback ) {
             }
 
             // fill results
-            outList[counter] = result;
-            if ( task.name ) {
-                outHash[task.name] = result;
-            }
+            results[counter] = result;
 
             counter++;
 
             // all tasks are processed
             if ( counter >= tasks.length && typeof callback === 'function' ) {
-                callback(null, outList, outHash);
+                callback(null, results);
             } else {
                 handler(tasks[counter]);
             }
@@ -68,7 +64,7 @@ module.exports = function ( tasks, callback ) {
     if ( tasks.length === 0 ) {
         if ( typeof callback === 'function' ) {
             // empty result
-            callback(null, outList, outHash);
+            callback(null, results);
         }
     } else {
         // run the first task

@@ -33,26 +33,22 @@ describe('serial', function () {
     });
 
     it('should pass: null tasks', function ( done ) {
-        serial(null, function ( error, list, hash ) {
+        serial(null, function ( error, results ) {
             should.not.exist(error);
 
-            should.exist(list);
-            should.exist(hash);
-            list.should.eql([]);
-            hash.should.containDeep({});
+            should.exist(results);
+            results.should.eql([]);
 
             done();
         });
     });
 
     it('should pass: no tasks', function ( done ) {
-        serial([], function ( error, list, hash ) {
+        serial([], function ( error, results ) {
             should.not.exist(error);
 
-            should.exist(list);
-            should.exist(hash);
-            list.should.eql([]);
-            hash.should.containDeep({});
+            should.exist(results);
+            results.should.eql([]);
 
             done();
         });
@@ -66,13 +62,11 @@ describe('serial', function () {
                 }, 10);
             }
         ],
-        function ( error, list, hash ) {
+        function ( error, results ) {
             should.not.exist(error);
 
-            should.exist(list);
-            should.exist(hash);
-            list.should.eql([128]);
-            hash.should.containDeep({});
+            should.exist(results);
+            results.should.eql([128]);
 
             done();
         });
@@ -86,13 +80,11 @@ describe('serial', function () {
                 }, 10);
             }
         ],
-        function ( error, list, hash ) {
+        function ( error, results ) {
             should.not.exist(error);
 
-            should.exist(list);
-            should.exist(hash);
-            list.should.eql([128]);
-            hash.should.containDeep({one: 128});
+            should.exist(results);
+            results.should.eql([128]);
 
             done();
         });
@@ -106,12 +98,11 @@ describe('serial', function () {
                 }, 10);
             }
         ],
-        function ( error, list, hash ) {
+        function ( error, results ) {
             should.exist(error);
             error.should.containDeep({code: 123});
 
-            should.not.exist(list);
-            should.not.exist(hash);
+            should.not.exist(results);
 
             done();
         });
@@ -143,13 +134,11 @@ describe('serial', function () {
                 }, 0);
             }
         ],
-        function ( error, list, hash ) {
+        function ( error, results ) {
             should.not.exist(error);
 
-            should.exist(list);
-            should.exist(hash);
-            list.should.eql([true, 256, '512']);
-            hash.should.containDeep({});
+            should.exist(results);
+            results.should.eql([true, 256, '512']);
 
             done();
         });
@@ -171,17 +160,16 @@ describe('serial', function () {
             },
             function () {
                 counter++;
+
                 return 128;
             }
         ],
-        function ( error, list, hash ) {
+        function ( error, results ) {
             should.not.exist(error);
 
-            should.exist(list);
-            should.exist(hash);
+            should.exist(results);
             counter.should.equal(3);
-            list.should.eql([undefined, 256, 128]);
-            hash.should.containDeep({});
+            results.should.eql([undefined, 256, 128]);
 
             done();
         });
@@ -209,13 +197,11 @@ describe('serial', function () {
                 }, 0);
             }
         ],
-        function ( error, list, hash ) {
+        function ( error, results ) {
             should.not.exist(error);
 
-            should.exist(list);
-            should.exist(hash);
-            list.should.eql([true, 256, '512']);
-            hash.should.containDeep({t1: true, t2: 256, t3: '512'});
+            should.exist(results);
+            results.should.eql([true, 256, '512']);
 
             done();
         });
@@ -235,13 +221,11 @@ describe('serial', function () {
                 return 32;
             }
         ],
-        function ( error, list, hash ) {
+        function ( error, results ) {
             should.not.exist(error);
 
-            should.exist(list);
-            should.exist(hash);
-            list.should.eql([true, null, 32]);
-            hash.should.containDeep({t1: true, t2: null, t3: 32});
+            should.exist(results);
+            results.should.eql([true, null, 32]);
 
             done();
         });
@@ -265,13 +249,11 @@ describe('serial', function () {
                 }, 0);
             }
         ],
-        function ( error, list, hash ) {
+        function ( error, results ) {
             should.not.exist(error);
 
-            should.exist(list);
-            should.exist(hash);
-            list.should.eql([true, 256, '512']);
-            hash.should.containDeep({t1: true, t3: '512'});
+            should.exist(results);
+            results.should.eql([true, 256, '512']);
 
             done();
         });
@@ -291,13 +273,11 @@ describe('serial', function () {
                 return '512';
             }
         ],
-        function ( error, list, hash ) {
+        function ( error, results ) {
             should.not.exist(error);
 
-            should.exist(list);
-            should.exist(hash);
-            list.should.eql([true, 256, '512']);
-            hash.should.containDeep({t3: '512'});
+            should.exist(results);
+            results.should.eql([true, 256, '512']);
 
             done();
         });
@@ -326,12 +306,11 @@ describe('serial', function () {
                 }, 20);
             }
         ],
-        function ( error, list, hash ) {
+        function ( error, results ) {
             should.exist(error);
             error.should.equal(true);
 
-            should.not.exist(list);
-            should.not.exist(hash);
+            should.not.exist(results);
             counter.should.equal(1);
 
             done();
@@ -361,12 +340,11 @@ describe('serial', function () {
                 }, 20);
             }
         ],
-        function ( error, list, hash ) {
+        function ( error, results ) {
             should.exist(error);
             error.should.equal(123);
 
-            should.not.exist(list);
-            should.not.exist(hash);
+            should.not.exist(results);
             counter.should.equal(3);
 
             done();
@@ -390,12 +368,11 @@ describe('serial', function () {
                 callback(3);
             }
         ],
-        function ( error, list, hash ) {
+        function ( error, results ) {
             should.exist(error);
             error.should.equal(1);
 
-            should.not.exist(list);
-            should.not.exist(hash);
+            should.not.exist(results);
             counter.should.equal(1);
 
             done();

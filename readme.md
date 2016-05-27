@@ -37,7 +37,7 @@ Tasks definition:
 
 ```js
 parallel([
-    function taskA ( callback ) {
+    function ( callback ) {
         setTimeout(function () {
             callback(null, true);
         }, 10);
@@ -47,7 +47,7 @@ parallel([
             callback(null, 256);
         }, 20);
     },
-    function taskB ( callback ) {
+    function ( callback ) {
         setTimeout(function () {
             callback(null, '512');
         }, 0);
@@ -55,13 +55,11 @@ parallel([
     function () {
         return 32;
     }
-], function ( error, list, hash ) {
+], function ( error, results ) {
     if ( !error ) {
-        // list contains array of the given tasks execution results
+        // results contains array of the given tasks execution results
         // [true, 256, '512', 32]
-        // hash contains named tasks execution results
-        // {taskA: true, taskB: '512'}
-        console.log(list, hash);
+        console.log(results);
     }
 });
 ```
@@ -88,7 +86,7 @@ serial([
     function () {
         return 32;
     },
-    function taskA ( callback ) {
+    function ( callback ) {
         setTimeout(function () {
             callback(null, true);
         }, 10);
@@ -98,18 +96,16 @@ serial([
             callback(null, 256);
         }, 20);
     },
-    function taskB ( callback ) {
+    function ( callback ) {
         setTimeout(function () {
             callback(null, '512');
         }, 0);
     }
-], function ( error, list, hash ) {
+], function ( error, results ) {
     if ( !error ) {
-        // list contains array of the given tasks execution results
+        // results contains array of the given tasks execution results
         // [32, true, 256, '512']
-        // hash contains named tasks execution results
-        // {taskA: true, taskB: '512'}
-        console.log(list, hash);
+        console.log(results);
     }
 });
 ```
