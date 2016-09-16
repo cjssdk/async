@@ -12,11 +12,13 @@
     },
     "scripts": {
         "lint": "eslint ./*.js",
-        "test": "node ./tests/main.js",
+        "mocha": "node ./tests/main.js",
+        "test": "npm run mocha && npm run lint",
         "jsdoc": "jsdoc --destination doc *.js readme.md"
     },
     "devDependencies": {
         "cjs-eslint-config": "cjssdk/eslint-config",
+        "eslint": "2.*.*",
         "mocha": "3.*.*",
         "should": "11.*.*"
     },
