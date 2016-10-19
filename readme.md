@@ -5,6 +5,7 @@ Asynchronous tools
 [![NPM version](https://img.shields.io/npm/v/cjs-async.svg?style=flat-square)](https://www.npmjs.com/package/cjs-async)
 [![Dependencies Status](https://img.shields.io/david/cjssdk/async.svg?style=flat-square)](https://david-dm.org/cjssdk/async)
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-blue.svg?style=flat-square)](https://gitter.im/DarkPark/cjssdk)
+[![RunKit](https://img.shields.io/badge/RunKit-try-yellow.svg?style=flat-square)](https://runkit.com/npm/cjs-async)
 
 
 Set of methods to synchronize asynchronous operations.
@@ -19,7 +20,7 @@ npm install cjs-async
 
 ## Usage ##
 
-#### parallel
+### parallel ###
 
 Run the tasks array of functions in parallel, without waiting until the previous function has completed.
 If any of the functions pass an error to its callback, the main callback is immediately called with the value of the error.
@@ -33,7 +34,7 @@ Add to the scope:
 var parallel = require('cjs-async/parallel');
 ```
 
-Tasks definition:
+Tasks definition [example](https://runkit.com/5806464d34f36800145084a1/58064d8d6e03a80014553cd3):
 
 ```js
 parallel([
@@ -64,7 +65,7 @@ parallel([
 });
 ```
 
-#### serial
+### serial ###
 
 Run the functions in the tasks array in series, each one running once the previous function has completed.
 If any functions in the series pass an error to its callback, no more functions are run,
@@ -79,7 +80,7 @@ Add to the scope:
 var serial = require('cjs-async/serial');
 ```
 
-Tasks definition:
+Tasks definition [example](https://runkit.com/5806464d34f36800145084a1/58075c744340a6001486f275):
 
 ```js
 serial([
