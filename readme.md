@@ -29,17 +29,11 @@ Once the tasks have completed, the results are passed to the final callback as a
 Task function name is used to name the corresponding hash-table values.
 Task function can either use callback to specify error and result value or return result value immediately.
 
-Add to the scope:
+Online [example](https://runkit.com/darkpark/cjs-async-parallel):
 
 ```js
-var parallel = require('cjs-async/parallel');
-```
-
-Tasks definition [example](https://runkit.com/5806464d34f36800145084a1/58064d8d6e03a80014553cd3):
-
-```js
-parallel(
-    [
+var parallel = require('cjs-async/parallel'),
+    taskList = [
         function ( callback ) {
             setTimeout(function () {
                 callback(null, true);
@@ -58,14 +52,15 @@ parallel(
         function () {
             return 32;
         }
-    ], function ( error, results ) {
-        if ( !error ) {
-            // results contains array of the given tasks execution results
-            // [true, 256, '512', 32]
-            console.log(results);
-        }
+    ];
+
+parallel(taskList, function ( error, results ) {
+    if ( !error ) {
+        // results contains array of the given tasks execution results
+        // [true, 256, '512', 32]
+        console.log(results);
     }
-);
+});
 ```
 
 ### serial ###
@@ -77,17 +72,11 @@ Otherwise, callback receives an array and hash of results when tasks have comple
 Task function name is used to name the corresponding hash-table values.
 Task function can either use callback to specify error and result value or return result value immediately.
 
-Add to the scope:
+Online [example](https://runkit.com/darkpark/cjs-async-serial):
 
 ```js
-var serial = require('cjs-async/serial');
-```
-
-Tasks definition [example](https://runkit.com/5806464d34f36800145084a1/58075c744340a6001486f275):
-
-```js
-serial(
-    [
+var serial   = require('cjs-async/serial'),
+    taskList = [
         function () {
             return 32;
         },
@@ -106,14 +95,15 @@ serial(
                 callback(null, '512');
             }, 0);
         }
-    ], function ( error, results ) {
-        if ( !error ) {
-            // results contains array of the given tasks execution results
-            // [32, true, 256, '512']
-            console.log(results);
-        }
+    ];
+    
+serial(taskList, function ( error, results ) {
+    if ( !error ) {
+        // results contains array of the given tasks execution results
+        // [32, true, 256, '512']
+        console.log(results);
     }
-);
+});
 ```
 
 
