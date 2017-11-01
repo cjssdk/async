@@ -23,9 +23,7 @@ module.exports = function ( tasks, callback ) {
                 // and prevent other to callback
                 isError = true;
 
-                if ( typeof callback === 'function' ) {
-                    callback(error);
-                }
+                callback(error);
 
                 return;
             }
@@ -36,7 +34,7 @@ module.exports = function ( tasks, callback ) {
             counter++;
 
             // all tasks are processed
-            if ( counter >= tasks.length && typeof callback === 'function' ) {
+            if ( counter >= tasks.length ) {
                 callback(null, results);
             } else {
                 handler(tasks[counter]);
@@ -57,15 +55,18 @@ module.exports = function ( tasks, callback ) {
         }
     }
 
-    // sanitize
+    // sanitize task list
     tasks = Array.isArray(tasks) ? tasks : [];
+
+    // sanitize final handler
+    if ( typeof callback !== 'function' ) {
+        callback = function () { /* just in case */ };
+    }
 
     // no tasks were given
     if ( tasks.length === 0 ) {
-        if ( typeof callback === 'function' ) {
-            // empty result
-            callback(null, results);
-        }
+        // empty result
+        callback(null, results);
     } else {
         // run the first task
         handler(tasks[0]);
