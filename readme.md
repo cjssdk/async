@@ -38,32 +38,34 @@ var parallel = require('cjs-async/parallel');
 Tasks definition [example](https://runkit.com/5806464d34f36800145084a1/58064d8d6e03a80014553cd3):
 
 ```js
-parallel([
-    function ( callback ) {
-        setTimeout(function () {
-            callback(null, true);
-        }, 10);
-    },
-    function ( callback ) {
-        setTimeout(function () {
-            callback(null, 256);
-        }, 20);
-    },
-    function ( callback ) {
-        setTimeout(function () {
-            callback(null, '512');
-        }, 0);
-    },
-    function () {
-        return 32;
+parallel(
+    [
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, true);
+            }, 10);
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, 256);
+            }, 20);
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, '512');
+            }, 0);
+        },
+        function () {
+            return 32;
+        }
+    ], function ( error, results ) {
+        if ( !error ) {
+            // results contains array of the given tasks execution results
+            // [true, 256, '512', 32]
+            console.log(results);
+        }
     }
-], function ( error, results ) {
-    if ( !error ) {
-        // results contains array of the given tasks execution results
-        // [true, 256, '512', 32]
-        console.log(results);
-    }
-});
+);
 ```
 
 ### serial ###
@@ -84,32 +86,34 @@ var serial = require('cjs-async/serial');
 Tasks definition [example](https://runkit.com/5806464d34f36800145084a1/58075c744340a6001486f275):
 
 ```js
-serial([
-    function () {
-        return 32;
-    },
-    function ( callback ) {
-        setTimeout(function () {
-            callback(null, true);
-        }, 10);
-    },
-    function ( callback ) {
-        setTimeout(function () {
-            callback(null, 256);
-        }, 20);
-    },
-    function ( callback ) {
-        setTimeout(function () {
-            callback(null, '512');
-        }, 0);
+serial(
+    [
+        function () {
+            return 32;
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, true);
+            }, 10);
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, 256);
+            }, 20);
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, '512');
+            }, 0);
+        }
+    ], function ( error, results ) {
+        if ( !error ) {
+            // results contains array of the given tasks execution results
+            // [32, true, 256, '512']
+            console.log(results);
+        }
     }
-], function ( error, results ) {
-    if ( !error ) {
-        // results contains array of the given tasks execution results
-        // [32, true, 256, '512']
-        console.log(results);
-    }
-});
+);
 ```
 
 
