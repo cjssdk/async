@@ -7,6 +7,7 @@ Asynchronous tools
 [![devDependencies status](https://img.shields.io/david/dev/cjssdk/async.svg?style=flat-square)](https://david-dm.org/cjssdk/async?type=dev)
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-blue.svg?style=flat-square)](https://gitter.im/DarkPark/cjssdk)
 [![RunKit](https://img.shields.io/badge/RunKit-try-yellow.svg?style=flat-square)](https://runkit.com/npm/cjs-async)
+[![API](https://img.shields.io/badge/API-docs-orange.svg?style=flat-square)](https://cjssdk.github.io/async/)
 
 
 Set of methods to synchronize asynchronous operations.

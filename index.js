@@ -1,12 +1,23 @@
 /**
+ * @module cjs-async
  * @license The MIT License (MIT)
  * @copyright Stanislav Kalashnik <darkpark.main@gmail.com>
  */
 
 'use strict';
 
-// public
-module.exports = {
-    serial:   require('./serial'),
-    parallel: require('./parallel')
-};
+
+/**
+ * Serial tasks execution.
+ *
+ * @type {module:cjs-async/serial}
+ */
+module.exports.serial = require('./serial');
+
+
+/**
+ * Parallel tasks execution.
+ *
+ * @type {module:cjs-async/parallel}
+ */
+module.exports.parallel = require('./parallel');
