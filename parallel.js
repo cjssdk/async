@@ -18,6 +18,12 @@ module.exports = function ( tasks, callback ) {
 
     function handler ( task, index ) {
         var done = function ( error, result ) {
+            // error happened in some other task
+            if ( isError ) {
+                // callback was already used
+                return;
+            }
+
             if ( error ) {
                 // exit this task
                 // and prevent other to callback
@@ -42,12 +48,6 @@ module.exports = function ( tasks, callback ) {
                 throw Error('done callback invoked more than one time in function with ' + index + ' position in tasks array');
             }
         };
-
-        // error happened in some other task
-        if ( isError ) {
-            // callback was already used
-            return;
-        }
 
         // actual call condition
         if ( task.length === 0 ) {
