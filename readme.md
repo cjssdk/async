@@ -7,6 +7,7 @@ Asynchronous tools
 [![devDependencies status](https://img.shields.io/david/dev/cjssdk/async.svg?style=flat-square)](https://david-dm.org/cjssdk/async?type=dev)
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-blue.svg?style=flat-square)](https://gitter.im/DarkPark/cjssdk)
 [![RunKit](https://img.shields.io/badge/RunKit-try-yellow.svg?style=flat-square)](https://runkit.com/npm/cjs-async)
+[![API](https://img.shields.io/badge/API-docs-orange.svg?style=flat-square)](https://cjssdk.github.io/async/)
 
 
 Set of methods to synchronize asynchronous operations.
@@ -29,35 +30,32 @@ Once the tasks have completed, the results are passed to the final callback as a
 Task function name is used to name the corresponding hash-table values.
 Task function can either use callback to specify error and result value or return result value immediately.
 
-Add to the scope:
+Online [example](https://runkit.com/darkpark/cjs-async-parallel):
 
 ```js
-var parallel = require('cjs-async/parallel');
-```
+var parallel = require('cjs-async/parallel'),
+    taskList = [
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, true);
+            }, 10);
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, 256);
+            }, 20);
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, '512');
+            }, 0);
+        },
+        function () {
+            return 32;
+        }
+    ];
 
-Tasks definition [example](https://runkit.com/5806464d34f36800145084a1/58064d8d6e03a80014553cd3):
-
-```js
-parallel([
-    function ( callback ) {
-        setTimeout(function () {
-            callback(null, true);
-        }, 10);
-    },
-    function ( callback ) {
-        setTimeout(function () {
-            callback(null, 256);
-        }, 20);
-    },
-    function ( callback ) {
-        setTimeout(function () {
-            callback(null, '512');
-        }, 0);
-    },
-    function () {
-        return 32;
-    }
-], function ( error, results ) {
+parallel(taskList, function ( error, results ) {
     if ( !error ) {
         // results contains array of the given tasks execution results
         // [true, 256, '512', 32]
@@ -75,35 +73,32 @@ Otherwise, callback receives an array and hash of results when tasks have comple
 Task function name is used to name the corresponding hash-table values.
 Task function can either use callback to specify error and result value or return result value immediately.
 
-Add to the scope:
+Online [example](https://runkit.com/darkpark/cjs-async-serial):
 
 ```js
-var serial = require('cjs-async/serial');
-```
-
-Tasks definition [example](https://runkit.com/5806464d34f36800145084a1/58075c744340a6001486f275):
-
-```js
-serial([
-    function () {
-        return 32;
-    },
-    function ( callback ) {
-        setTimeout(function () {
-            callback(null, true);
-        }, 10);
-    },
-    function ( callback ) {
-        setTimeout(function () {
-            callback(null, 256);
-        }, 20);
-    },
-    function ( callback ) {
-        setTimeout(function () {
-            callback(null, '512');
-        }, 0);
-    }
-], function ( error, results ) {
+var serial   = require('cjs-async/serial'),
+    taskList = [
+        function () {
+            return 32;
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, true);
+            }, 10);
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, 256);
+            }, 20);
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, '512');
+            }, 0);
+        }
+    ];
+    
+serial(taskList, function ( error, results ) {
     if ( !error ) {
         // results contains array of the given tasks execution results
         // [32, true, 256, '512']
@@ -115,8 +110,8 @@ serial([
 
 ## Contribution ##
 
-If you have any problem or suggestion please open an issue [here](https://github.com/cjssdk/async/issues).
-Pull requests are welcomed with respect to the [JavaScript Code Style](https://github.com/DarkPark/jscs).
+If you have any problems or suggestions please open an [issue](https://github.com/cjssdk/async/issues)
+according to the contribution [rules](.github/contributing.md).
 
 
 ## License ##

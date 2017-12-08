@@ -1,6 +1,6 @@
 {
     "name": "cjs-async",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "description": "Asynchronous tools.",
     "author": {
         "name": "Stanislav Kalashnik",
@@ -11,16 +11,17 @@
         "url": "https://github.com/cjssdk/async.git"
     },
     "scripts": {
-        "lint": "eslint .",
+        "lint": "eslint --ignore-pattern '/docs/' .",
         "mocha": "node ./tests/main.js",
         "test": "npm run mocha && npm run lint",
-        "jsdoc": "jsdoc --destination doc *.js readme.md"
+        "jsdoc": "jsdoc --destination docs *.js readme.md"
     },
     "devDependencies": {
         "cjs-eslint-config": "1.*.*",
-        "eslint": "3.*.*",
-        "mocha": "3.*.*",
-        "should": "11.*.*"
+        "eslint": "4.*.*",
+        "jsdoc": "3.*.*",
+        "mocha": "4.*.*",
+        "should": "13.*.*"
     },
     "keywords": [
         "commonjs",

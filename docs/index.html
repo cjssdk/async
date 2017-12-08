@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Asynchronous tools</h1><p><a href="https://travis-ci.org/cjssdk/async"><img src="https://img.shields.io/travis/cjssdk/async.svg?style=flat-square" alt="build status"></a>
+<a href="https://www.npmjs.com/package/cjs-async"><img src="https://img.shields.io/npm/v/cjs-async.svg?style=flat-square" alt="npm version"></a>
+<a href="https://david-dm.org/cjssdk/async"><img src="https://img.shields.io/david/cjssdk/async.svg?style=flat-square" alt="dependencies status"></a>
+<a href="https://david-dm.org/cjssdk/async?type=dev"><img src="https://img.shields.io/david/dev/cjssdk/async.svg?style=flat-square" alt="devDependencies status"></a>
+<a href="https://gitter.im/DarkPark/cjssdk"><img src="https://img.shields.io/badge/gitter-join%20chat-blue.svg?style=flat-square" alt="Gitter"></a>
+<a href="https://runkit.com/npm/cjs-async"><img src="https://img.shields.io/badge/RunKit-try-yellow.svg?style=flat-square" alt="RunKit"></a>
+<a href="https://cjssdk.github.io/async/"><img src="https://img.shields.io/badge/API-docs-orange.svg?style=flat-square" alt="API"></a></p>
+<p>Set of methods to synchronize asynchronous operations.</p>
+<h2>Installation</h2><pre class="prettyprint source lang-bash"><code>npm install cjs-async</code></pre><h2>Usage</h2><h3>parallel</h3><p>Run the tasks array of functions in parallel, without waiting until the previous function has completed.
+If any of the functions pass an error to its callback, the main callback is immediately called with the value of the error.
+Once the tasks have completed, the results are passed to the final callback as an array and hash.
+Task function name is used to name the corresponding hash-table values.
+Task function can either use callback to specify error and result value or return result value immediately.</p>
+<p>Online <a href="https://runkit.com/darkpark/cjs-async-parallel">example</a>:</p>
+<pre class="prettyprint source lang-js"><code>var parallel = require('cjs-async/parallel'),
+    taskList = [
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, true);
+            }, 10);
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, 256);
+            }, 20);
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, '512');
+            }, 0);
+        },
+        function () {
+            return 32;
+        }
+    ];
+
+parallel(taskList, function ( error, results ) {
+    if ( !error ) {
+        // results contains array of the given tasks execution results
+        // [true, 256, '512', 32]
+        console.log(results);
+    }
+});</code></pre><h3>serial</h3><p>Run the functions in the tasks array in series, each one running once the previous function has completed.
+If any functions in the series pass an error to its callback, no more functions are run,
+and callback is immediately called with the value of the error.
+Otherwise, callback receives an array and hash of results when tasks have completed.
+Task function name is used to name the corresponding hash-table values.
+Task function can either use callback to specify error and result value or return result value immediately.</p>
+<p>Online <a href="https://runkit.com/darkpark/cjs-async-serial">example</a>:</p>
+<pre class="prettyprint source lang-js"><code>var serial   = require('cjs-async/serial'),
+    taskList = [
+        function () {
+            return 32;
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, true);
+            }, 10);
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, 256);
+            }, 20);
+        },
+        function ( callback ) {
+            setTimeout(function () {
+                callback(null, '512');
+            }, 0);
+        }
+    ];
+
+serial(taskList, function ( error, results ) {
+    if ( !error ) {
+        // results contains array of the given tasks execution results
+        // [32, true, 256, '512']
+        console.log(results);
+    }
+});</code></pre><h2>Contribution</h2><p>If you have any problems or suggestions please open an <a href="https://github.com/cjssdk/async/issues">issue</a>
+according to the contribution <a href=".github/contributing.md">rules</a>.</p>
+<h2>License</h2><p><code>cjs-async</code> is released under the <a href="license.md">MIT License</a>.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cjs-async.html">cjs-async</a></li><li><a href="module-cjs-async_parallel.html">cjs-async/parallel</a></li><li><a href="module-cjs-async_serial.html">cjs-async/serial</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Nov 02 2017 18:04:30 GMT+0200 (EET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
