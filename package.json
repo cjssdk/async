@@ -1,5 +1,5 @@
 {
-    "name": "cjs-async",
+    "name": "@cjssdk/async",
     "version": "1.5.1",
     "description": "Asynchronous tools.",
     "author": {
@@ -10,6 +10,9 @@
         "type": "git",
         "url": "https://github.com/cjssdk/async.git"
     },
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "lint": "eslint --ignore-pattern '/docs/' .",
         "mocha": "node ./tests/main.js",
@@ -17,7 +20,7 @@
         "jsdoc": "jsdoc --destination docs *.js readme.md"
     },
     "devDependencies": {
-        "cjs-eslint-config": "1.*.*",
+        "@cjssdk/eslint-config": "1.*.*",
         "eslint": "4.*.*",
         "jsdoc": "3.*.*",
         "mocha": "4.*.*",
