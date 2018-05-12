@@ -23,7 +23,7 @@
         "@cjssdk/eslint-config": "1.*.*",
         "eslint": "4.*.*",
         "jsdoc": "3.*.*",
-        "mocha": "4.*.*",
+        "mocha": "5.*.*",
         "should": "13.*.*"
     },
     "keywords": [
