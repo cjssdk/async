@@ -1,6 +1,6 @@
 /**
  * @license The MIT License (MIT)
- * @copyright Stanislav Kalashnik <darkpark.main@gmail.com>
+ * @author Stanislav Kalashnik <darkpark.main@gmail.com>
  */
 
 'use strict';
@@ -8,6 +8,7 @@
 /* eslint-env mocha */
 /* eslint-disable no-useless-call */
 /* eslint-disable no-unused-vars */
+/* eslint-disable max-lines-per-function */
 
 
 var should   = require('should'),
