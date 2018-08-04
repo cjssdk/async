@@ -1,7 +1,7 @@
 /**
- * @module @cjssdk/async/parallel
+ * @module cjs-async/parallel
  * @license The MIT License (MIT)
- * @copyright Stanislav Kalashnik <darkpark.main@gmail.com>
+ * @author Stanislav Kalashnik <darkpark.main@gmail.com>
  */
 
 'use strict';
@@ -20,7 +20,7 @@
  *
  * @callback taskHandler
  *
- * @param {module:@cjssdk/async/parallel~onTaskFinishCallback} [callback] method to be called to set task as completed
+ * @param {module:cjs-async/parallel~onTaskFinishCallback} [callback] method to be called to set task as completed
  *
  * @example
  * function ( callback ) {
@@ -40,8 +40,8 @@
 /**
  * Parallel tasks execution.
  *
- * @param {module:@cjssdk/async/parallel~taskHandler[]} tasks set of tasks to execute
- * @param {module:@cjssdk/async/parallel~onFinishCallback} [callback] optional callback to run once all the tasks have completed
+ * @param {module:cjs-async/parallel~taskHandler[]} tasks set of tasks to execute
+ * @param {module:cjs-async/parallel~onFinishCallback} [callback] optional callback to run once all the tasks have completed
  *
  * @example
  * parallel(taskList, function ( error, results ) {

@@ -2,11 +2,11 @@ Asynchronous tools
 ==================
 
 [![build status](https://img.shields.io/travis/cjssdk/async.svg?style=flat-square)](https://travis-ci.org/cjssdk/async)
-[![npm version](https://img.shields.io/npm/v/@cjssdk/async.svg?style=flat-square)](https://www.npmjs.com/package/@cjssdk/async)
+[![npm version](https://img.shields.io/npm/v/cjs-async.svg?style=flat-square)](https://www.npmjs.com/package/cjs-async)
 [![dependencies status](https://img.shields.io/david/cjssdk/async.svg?style=flat-square)](https://david-dm.org/cjssdk/async)
 [![devDependencies status](https://img.shields.io/david/dev/cjssdk/async.svg?style=flat-square)](https://david-dm.org/cjssdk/async?type=dev)
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-blue.svg?style=flat-square)](https://gitter.im/DarkPark/cjssdk)
-[![RunKit](https://img.shields.io/badge/RunKit-try-yellow.svg?style=flat-square)](https://npm.runkit.com/@cjssdk/async)
+[![RunKit](https://img.shields.io/badge/RunKit-try-yellow.svg?style=flat-square)](https://npm.runkit.com/cjs-async)
 [![API](https://img.shields.io/badge/API-docs-orange.svg?style=flat-square)](https://cjssdk.github.io/async/)
 
 
@@ -16,7 +16,7 @@ Set of methods to synchronize asynchronous operations.
 ## Installation ##
 
 ```bash
-npm install @cjssdk/async
+npm install cjs-async
 ```
 
 
@@ -33,7 +33,7 @@ Task function can either use callback to specify error and result value or retur
 Online [example](https://runkit.com/darkpark/cjs-async-parallel):
 
 ```js
-var parallel = require('@cjssdk/async/parallel'),
+var parallel = require('cjs-async/parallel'),
     taskList = [
         function ( callback ) {
             setTimeout(function () {
@@ -76,7 +76,7 @@ Task function can either use callback to specify error and result value or retur
 Online [example](https://runkit.com/darkpark/cjs-async-serial):
 
 ```js
-var serial   = require('@cjssdk/async/serial'),
+var serial   = require('cjs-async/serial'),
     taskList = [
         function () {
             return 32;
@@ -116,4 +116,4 @@ according to the contribution [rules](.github/contributing.md).
 
 ## License ##
 
-`@cjssdk/async` is released under the [MIT License](license.md).
+`cjs-async` is released under the [MIT License](license.md).
