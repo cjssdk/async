@@ -20,7 +20,7 @@
  *
  * @callback taskHandler
  *
- * @param {module:cjs-async/serial~onTaskFinishCallback} [callback] method to be called to set task as completed
+ * @param {onTaskFinishCallback} [callback] - method to be called to set task as completed
  *
  * @example
  * function ( callback ) {
@@ -40,8 +40,8 @@
 /**
  * Serial tasks execution.
  *
- * @param {module:cjs-async/serial~taskHandler[]} tasks set of tasks to execute
- * @param {module:cjs-async/serial~onFinishCallback} [callback] optional callback to run once all the tasks have completed
+ * @param {taskHandler[]} tasks - set of tasks to execute
+ * @param {onFinishCallback} [callback] - optional callback to run once all the tasks have completed
  *
  * @example
  * serial(taskList, function ( error, results ) {
